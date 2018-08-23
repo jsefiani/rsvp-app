@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import uniqid from 'uniqid';
 
-import Header from './components/Header';
-import MainContent from './components/MainContent';
+import Header from './Header';
+import MainContent from './MainContent';
 import SimpleStorage from "react-simple-storage";
 //import './App.css';
 
