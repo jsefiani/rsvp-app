@@ -2,7 +2,7 @@
   "name": "rsvp",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/jsefiani/rsvp-app",
+  "homepage": "https://github.com/jsefiani/rsvp-app-redux",
   "dependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
