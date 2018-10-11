@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 
 const GuestInputForm = props => {
@@ -17,11 +16,5 @@ const GuestInputForm = props => {
         </form>
     )
 };
-
-GuestInputForm.propTypes = {
-    newGuestSubmitHandler: PropTypes.func.isRequired,
-    handleNameInput: PropTypes.func.isRequired,
-    pendingGuest: PropTypes.string.isRequired,
-}
 
 export default GuestInputForm;

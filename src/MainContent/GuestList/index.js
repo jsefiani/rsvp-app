@@ -1,35 +1,73 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Guest from './Guest';
 import PendingGuest from './PendingGuest';
 
-const GuestList = (props) => 
-        <ul>
-            <PendingGuest name={props.pendingGuest}/>
-            {props.guests
-            .filter(guest => !props.isFiltered || guest.isConfirmed)
-            .map((guest, index) => 
-                <Guest 
-                key={index}
-                name={guest.name} 
-                isConfirmed={guest.isConfirmed}
-                isEditing={guest.isEditing}
-                handleConfirmation={() => props.toggleConfirmation(guest.id)}
-                handleToggleEditing={() => props.toggleEditing(guest.id)}
-                setName={text => props.setName(text, guest.id)}
-                handleRemove={() => props.removeGuest(guest.id)}
-                />
-            )}
-        </ul>
+import { connect } from "react-redux";
 
-GuestList.propTypes = {
-    guests: PropTypes.array.isRequired,
-    toggleConfirmation: PropTypes.func.isRequired,
-    toggleEditing: PropTypes.func.isRequired,
-    setName: PropTypes.func.isRequired,
-    isFiltered: PropTypes.bool.isRequired,
-    removeGuest: PropTypes.func.isRequired,
-    pendingGuest: PropTypes.string.isRequired,
+// Import actions
+import { removeGuest, toggleConfirmation, toggleEditing, setNameGuest } from "../../actions/rsvpActions";
+
+
+export class GuestList extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
+    onRemoveGuest = (id) => {
+        this.props.removeGuest({ id })
+    }
+
+    toggleConfirmation = (id) => {
+        this.props.toggleConfirmation(id)
+    }
+
+    toggleEditing = (id) => {
+        this.props.toggleEditing(id)
+    }
+
+    setName = (newName, id) => {
+        this.props.setNameGuest(newName, id)
+    }
+
+    render() {
+        return (
+            <ul>
+                <PendingGuest name={this.props.pendingGuest} />
+                {this.props.guests
+                    .filter(guest => !this.props.isFiltered || guest.isConfirmed)
+                    .map((guest, index) =>
+                        <Guest
+                            key={index}
+                            name={guest.name} // Done
+                            isConfirmed={guest.isConfirmed} // Done
+                            isEditing={guest.isEditing} // Done
+                            handleConfirmation={() => this.toggleConfirmation(guest.id)} // Done
+                            handleToggleEditing={() => this.toggleEditing(guest.id)} // Done
+                            setName={text => this.setName(text, guest.id)} // Done
+                            handleRemove={() => this.onRemoveGuest(guest.id)} // Done
+                        />
+                    )
+                }
+            </ul>
+        )
+    }
+} 
+
+const mapStateToProps = (state) => {
+    return {
+        guests: state.guests,
+        pendingGuest: state.pendingGuest,
+        isFiltered: state.isFiltered
+    }
 }
 
-export default GuestList;
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        removeGuest: (id) => dispatch(removeGuest(id)),
+        toggleConfirmation: (id) => dispatch(toggleConfirmation(id)),
+        toggleEditing: (id) => dispatch(toggleEditing(id)),
+        setNameGuest: (newName, id) => dispatch(setNameGuest(newName, id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GuestList);

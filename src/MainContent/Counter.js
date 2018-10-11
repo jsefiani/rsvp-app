@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const Counter = props => {
     return (
-         <table className="counter">
+        <table className="counter">
             <tbody>
             <tr>
                 <td>Attending:</td>
@@ -18,7 +18,7 @@ const Counter = props => {
                 <td>{props.totalInvited}</td>
             </tr>
             </tbody>
-      </table>
+        </table>
     );
 }
 

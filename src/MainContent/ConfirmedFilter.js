@@ -1,26 +1,46 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+// import actions
+import { toggleFilter } from "../actions/rsvpActions";
 
 
-const ConfirmedFilter = (props) => {
-    return (
-        <div>
-            <h2>Invitees</h2>
-            <label>
-                <input
-                type="checkbox"
-                onChange={props.toggleFilter}
-                checked={props.isFiltered}
-                />{" "}
-                Hide those who haven't responded
+class ConfirmedFilter extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
+    toggleFilter = () => {
+        this.props.toggleFilter()
+    }
+
+    render(){
+        return (
+            <div>
+                <h2>Invitees</h2>
+                <label>
+                    <input
+                        type="checkbox"
+                        onChange={this.toggleFilter}
+                        checked={this.props.isFiltered}
+                    />{" "}
+                    Hide those who haven't responded
             </label>
-        </div>
-    )
+            </div>
+        )
+    }
 }
 
-ConfirmedFilter.propTypes = {
-    isFiltered: PropTypes.bool.isRequired,
-    toggleFilter: PropTypes.func.isRequired
+const mapStateToProps = (state, props) => {
+    return {
+        isFiltered: state.isFiltered
+    }
 }
 
-export default ConfirmedFilter;
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        toggleFilter: () => dispatch(toggleFilter())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmedFilter);
